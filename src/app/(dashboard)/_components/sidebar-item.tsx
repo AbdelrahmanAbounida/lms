@@ -20,7 +20,7 @@ const SidebarItem = (itemprops: itemProps) => {
       href={itemprops.href}
       className={cn(
         "flex text-md text-[16px] items-center w-full px-3 py-3 rounded-md text-slate-900 hover:bg-slate-100 ",
-        isActive && "bg-green-50/70 text-green-700"
+        isActive && "hover:bg-green-50/70 bg-green-50/70 text-green-700"
       )}
     >
       {<itemprops.icon className={cn(isActive && "text-green-700")} />}

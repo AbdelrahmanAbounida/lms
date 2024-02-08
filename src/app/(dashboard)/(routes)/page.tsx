@@ -1,8 +1,7 @@
-"use client";
 import React from "react";
 
-const Home = () => {
-  return <div>Home</div>;
+const HomeStudent = () => {
+  return <div>HomeStudent</div>;
 };
 
-export default Home;
+export default HomeStudent;

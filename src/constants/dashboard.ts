@@ -1,6 +1,8 @@
 import { FiHome } from "react-icons/fi";
-import { FaRegCompass } from "react-icons/fa6";
 import { IconType } from "react-icons";
+import { FaChartSimple } from "react-icons/fa6";
+import { FaList } from "react-icons/fa6";
+import { FaRegChartBar } from "react-icons/fa";
 
 export interface SidebarItemProps {
   title: string;
@@ -9,14 +11,14 @@ export interface SidebarItemProps {
 }
 export const sidebarTeacherItems: SidebarItemProps[] = [
   {
-    title: "Home",
-    href: "/",
-    icon: FiHome,
+    title: "Browse",
+    href: "/teacher/courses",
+    icon: FaList,
   },
   {
-    title: "Browse",
-    href: "/teacher/browse",
-    icon: FaRegCompass,
+    title: "Analytics",
+    href: "/teacher/analytics",
+    icon: FaChartSimple,
   },
 ];
 
@@ -27,8 +29,8 @@ export const sidebarStudentItems: SidebarItemProps[] = [
     icon: FiHome,
   },
   {
-    title: "Browse",
-    href: "/student/browse",
-    icon: FiHome,
+    title: "Courses",
+    href: "/student/courses",
+    icon: FaList,
   },
 ];

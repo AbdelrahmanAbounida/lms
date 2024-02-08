@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export interface profileSettingsProps {
   image: string;
@@ -20,21 +21,25 @@ export interface profileSettingsProps {
 const PropfileSettings = ({ image, name, email }: profileSettingsProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
+      <DropdownMenuTrigger className="">
+        <Avatar className="bg-green-100">
           <AvatarImage src={image} />
-          <AvatarFallback>{name?.slice(0, 2)}</AvatarFallback>
+          <AvatarFallback className={cn(!image && "bg-green-50")}>
+            {name ? name?.slice(0, 2) : email?.slice(0, 2)}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[250px]">
+      <DropdownMenuContent className="w-[270px] mr-5 space-y-2">
         <DropdownMenuLabel className="pb-0">{name}</DropdownMenuLabel>
         <span className="text-slate-500 font-normal text-sm p-2">{email}</span>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer flex gap-2 font-medium">
+        <DropdownMenuItem className="cursor-pointer flex gap-2 font-medium my-1">
           <IoSettingsOutline />
           Settings
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer flex gap-2 font-medium">
+        {/* <DropdownMenuSeparator /> */}
+
+        <DropdownMenuItem className="cursor-pointer flex gap-2 font-medium my-1">
           <AiOutlineLogout />
           Logout
         </DropdownMenuItem>

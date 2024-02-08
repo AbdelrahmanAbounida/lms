@@ -75,6 +75,7 @@ export const {
         session.user.isauth = token.isauth;
         session.user.id = token.id;
       }
+
       // console.log({ session });
       return session;
     },

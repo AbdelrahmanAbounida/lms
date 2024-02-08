@@ -1,4 +1,3 @@
-import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import {
   API_AUTH_PREFIX,
@@ -7,10 +6,11 @@ import {
   PROTECTED_ROUTES,
 } from "@/routes";
 import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth(async (req) => {
   // req.auth
   const { nextUrl } = req;
 
@@ -18,6 +18,8 @@ export default auth((req) => {
   const isProtectedRoute = PROTECTED_ROUTES.includes(nextUrl.pathname);
   const isAuthRoute = AUTH_ROUTES.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(API_AUTH_PREFIX);
+
+  // const role = req.auth;
 
   // if it is api route
   if (isApiAuthRoute) {

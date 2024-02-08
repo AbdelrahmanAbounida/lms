@@ -1,7 +1,7 @@
 import React from "react";
 
-const StudentBrowse = () => {
-  return <div>StudentBrowse</div>;
+const BrowseStudent = () => {
+  return <div>BrowseStudent</div>;
 };
 
-export default StudentBrowse;
+export default BrowseStudent;
