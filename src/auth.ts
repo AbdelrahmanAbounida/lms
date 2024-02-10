@@ -76,7 +76,6 @@ export const {
         session.user.id = token.id;
       }
 
-      // console.log({ session });
       return session;
     },
   },

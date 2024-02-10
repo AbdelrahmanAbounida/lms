@@ -44,6 +44,9 @@ model User {
   accounts      Account[]
   verificationToken AuthToken?    @relation(name: "VerificationToken")
   passwordResetToken  AuthToken?  @relation(name: "PasswordResetToken")
+
+
+  courses Course[]
 }
 
 
@@ -54,4 +57,47 @@ model AuthToken {
   expires DateTime
   verifyuser  User @relation(fields: [userId],name: "VerificationToken",references: [id],onDelete: Cascade) 
   passwordResetuser  User @relation(fields: [userId],name: "PasswordResetToken",references: [id],onDelete: Cascade) 
+}
+
+
+// main database 
+
+model Course {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  userId String @db.ObjectId
+  categoryId String? @db.ObjectId
+  title String @db.String @unique
+  description String? @db.String 
+  imageUrl String? @db.String 
+  price Float? @default(0.0)
+  isPublished Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  attachments Attachment[]
+
+  user User @relation(fields: [userId],references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId],references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+}
+
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  courses Course[]
+}
+
+model Attachment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  courseId String @db.ObjectId
+  
+  name String
+  url String @db.String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course Course @relation(fields: [courseId],references: [id],onDelete:Cascade)
 }

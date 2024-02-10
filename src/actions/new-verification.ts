@@ -17,8 +17,7 @@ export const verifyEmail = async (token: string) => {
 
   // check if there is no email for the given token
   const user = await getUserbyId({ id: tokenexist.userId });
-  // console.log({ tokenexist });
-  // console.log({ user });
+
   if (!user) return { error: "No Email found for the given token" };
 
   // check if the token expired

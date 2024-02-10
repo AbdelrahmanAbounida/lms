@@ -22,7 +22,7 @@ const SideBar = () => {
 
       <ul className="space-y-2 text-sm font-medium h-full">
         {sidebarRoutes.map((item, index) => (
-          <div className="w-full  flex items-center">
+          <div key={index} className="w-full  flex items-center">
             <SidebarItem active={index == 0} key={index} {...item} />
           </div>
         ))}

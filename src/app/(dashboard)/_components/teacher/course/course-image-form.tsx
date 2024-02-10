@@ -1,0 +1,108 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { MdEdit } from "react-icons/md";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { editCourse } from "@/actions/teacher/courses";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
+const CourseImageForm = ({
+  image,
+  courseId,
+}: {
+  image: string;
+  courseId: any;
+}) => {
+  const [pending, startTransition] = useTransition();
+  const [editing, setediting] = useState(false);
+  const router = useRouter();
+
+  const courseimageSchema = z.object({
+    image: z.string().min(1, { message: "image is required" }),
+  });
+
+  const form = useForm<z.infer<typeof courseimageSchema>>({
+    resolver: zodResolver(courseimageSchema),
+    defaultValues: {
+      image,
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof courseimageSchema>) => {
+    startTransition(() => {
+      editCourse({ data, courseId }).then((resp: any) => {
+        if (resp?.error) {
+          toast.error(resp.error);
+        } else {
+          toast.success(resp?.success);
+          router.refresh();
+          setediting(false);
+        }
+      });
+    });
+  };
+
+  return (
+    <div className="p-6 flex flex-col bg-slate-100 rounded-md  w-full">
+      <div className="w-full flex items-center justify-between">
+        <h3 className="font-medium text-lg">Course image</h3>
+        <Button
+          variant={"secondary"}
+          onClick={() => setediting((prev) => !prev)}
+        >
+          {editing ? (
+            <div>Cancel</div>
+          ) : (
+            <div className="flex gap-1 items-center">
+              <MdEdit className="h-4 w-4 mr-2" />
+              Edit image
+            </div>
+          )}
+        </Button>
+      </div>
+
+      <div className="mt-3">
+        {!editing ? (
+          <div className="text-slate-500">{image} </div>
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                name="image"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="Course image"
+                        disabled={pending}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="mt-5" type="submit">
+                Update
+              </Button>
+            </form>
+          </Form>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default CourseImageForm;

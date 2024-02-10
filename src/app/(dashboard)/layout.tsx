@@ -21,17 +21,11 @@ export default function DashboardLayout({ children }: AuthLayoutProps) {
         <SideBar />
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel>
+      <ResizablePanel defaultSize={85}>
         <div className="flex flex-col space-y-2 ">
           <Navbar />
           {children}
         </div>
-        {/* <ResizablePanelGroup className=" " direction="vertical">
-          <ResizablePanel maxSize={15} minSize={15}>
-            <Navbar />
-          </ResizablePanel>
-          <div className="border">{children}</div>
-        </ResizablePanelGroup> */}
       </ResizablePanel>
     </ResizablePanelGroup>
   );

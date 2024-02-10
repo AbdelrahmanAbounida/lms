@@ -26,7 +26,6 @@ export default auth(async (req) => {
     return null;
   }
   // check if it is auth routes
-  // console.log({ isLogedIn, isProtectedRoute });
   if (isAuthRoute) {
     if (isLogedIn) {
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECTED, nextUrl));

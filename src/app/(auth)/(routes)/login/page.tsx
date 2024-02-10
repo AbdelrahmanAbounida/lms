@@ -35,8 +35,6 @@ const loginPage = () => {
   // callback url
   const callbackurl = searchParams.get("callbackurl");
 
-  console.log({ callbackurl });
-
   const [pending, startTransition] = useTransition();
 
   const [successMessage, setsuccessMessage] = useState<String>("");
@@ -59,7 +57,6 @@ const loginPage = () => {
         setwarningMessage(res.warning as string);
       });
     });
-    // console.log({ data });
   };
   return (
     <div className="flex text-white text-lg">

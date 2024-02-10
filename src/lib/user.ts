@@ -16,7 +16,6 @@ export const getUserbyEmail = async ({ email }: { email: string }) => {
 
 export const getUserbyId = async ({ id }: { id: any }) => {
   try {
-    console.log({ id });
     const user = await prismadb.user.findUnique({
       where: {
         id,

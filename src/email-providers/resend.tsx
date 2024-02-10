@@ -32,6 +32,6 @@ export const sendResendEmail = async (
       react: template,
     });
   } catch (error) {
-    console.log({ ResendErrrrrrrror: error });
+    console.log({ error });
   }
 };

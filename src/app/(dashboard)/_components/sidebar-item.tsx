@@ -23,7 +23,14 @@ const SidebarItem = (itemprops: itemProps) => {
         isActive && "hover:bg-green-50/70 bg-green-50/70 text-green-700"
       )}
     >
-      {<itemprops.icon className={cn(isActive && "text-green-700")} />}
+      {
+        <itemprops.icon
+          className={cn(
+            "bg-green-600 h-6 w-6 p-1 rounded-full text-white",
+            isActive && ""
+          )}
+        />
+      }
       <span className="ml-3 flex-1  whitespace-nowrap">{itemprops.title}</span>
     </Link>
   );

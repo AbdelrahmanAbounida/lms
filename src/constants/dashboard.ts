@@ -3,6 +3,7 @@ import { IconType } from "react-icons";
 import { FaChartSimple } from "react-icons/fa6";
 import { FaList } from "react-icons/fa6";
 import { FaRegChartBar } from "react-icons/fa";
+import { IoMdCreate } from "react-icons/io";
 
 export interface SidebarItemProps {
   title: string;
@@ -11,9 +12,14 @@ export interface SidebarItemProps {
 }
 export const sidebarTeacherItems: SidebarItemProps[] = [
   {
-    title: "Browse",
-    href: "/teacher/courses",
+    title: "My Courses",
+    href: "/teacher/course/all",
     icon: FaList,
+  },
+  {
+    title: "New Course",
+    href: "/teacher/course/create",
+    icon: IoMdCreate,
   },
   {
     title: "Analytics",

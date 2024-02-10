@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
-export interface profileSettingsProps {
+interface profileSettingsProps {
   image: string;
   name: string;
   email: string;
