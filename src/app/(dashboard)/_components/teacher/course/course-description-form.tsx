@@ -12,7 +12,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { editCourse } from "@/actions/teacher/courses";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -30,7 +29,9 @@ const CourseDescriptionForm = ({
   const router = useRouter();
 
   const coursedescriptionSchema = z.object({
-    description: z.string(),
+    description: z
+      .string()
+      .min(1, { message: "Description shouldn't be null" }),
   });
 
   const form = useForm<z.infer<typeof coursedescriptionSchema>>({
@@ -88,6 +89,7 @@ const CourseDescriptionForm = ({
                   <FormItem>
                     <FormControl>
                       <Textarea
+                        rows={5}
                         className="bg-white"
                         placeholder="Course description"
                         disabled={pending}

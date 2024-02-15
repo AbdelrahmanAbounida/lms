@@ -1,0 +1,44 @@
+S3 
+***************************************************
+# 1- Create a bucket in S3 with those permission 
+***************************************************
+Bucket policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::learning-management-system-app/*"
+        }
+    ]
+}
+Cross-origin resource sharing (CORS)
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "PUT",
+            "GET"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [],
+        "MaxAgeSeconds": 3000
+    }
+]
+***************************************************
+2- I am Credential 
+***************************************************
+- create new user 
+- Attach policies directly
+- seach for s3 full access
+- select user and choose security credentials
+- Create access key
+- Application running outside AWS
+- copy keys 

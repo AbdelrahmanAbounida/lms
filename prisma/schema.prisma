@@ -45,7 +45,6 @@ model User {
   verificationToken AuthToken?    @relation(name: "VerificationToken")
   passwordResetToken  AuthToken?  @relation(name: "PasswordResetToken")
 
-
   courses Course[]
 }
 
@@ -76,6 +75,9 @@ model Course {
   updatedAt DateTime @updatedAt
 
   attachments Attachment[]
+  chapters Chapter[]
+  purchases Purchase[]
+
 
   user User @relation(fields: [userId],references: [id], onDelete: Cascade)
   category Category? @relation(fields: [categoryId],references: [id], onDelete: Cascade)
@@ -100,4 +102,70 @@ model Attachment {
   updatedAt DateTime @updatedAt
 
   course Course @relation(fields: [courseId],references: [id],onDelete:Cascade)
+}
+
+// chapter 
+model Chapter {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String 
+  description String? @db.String
+  videoUrl String? @db.String 
+  position Int 
+  isPublished Boolean @default(false)
+  isFree Boolean @default(false)
+  muxData MuxData? 
+
+  courseId String @db.ObjectId
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  userProgress userProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// UserProgress 
+model userProgress {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  isCompleted Boolean @default(false)
+  userId String 
+  chapterId String @db.ObjectId
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+// MuxData 
+model MuxData{
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  assetId String 
+  playbackId String? 
+  chapterId String @db.ObjectId  @unique
+  chapter Chapter @relation(fields: [chapterId],references: [id],onDelete: Cascade)
+}
+
+// Purchase 
+model Purchase {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  userId String @db.ObjectId
+  courseId String @db.ObjectId 
+  course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+
+// StripeCustomer 
+model StripeCustomer {
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  userId String @unique
+  stripeCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
