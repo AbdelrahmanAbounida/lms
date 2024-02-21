@@ -64,7 +64,7 @@ const CourseChapterForm = ({
 
   const onEdit = async (chapterId: string) => {
     setordering(true);
-    router.push(`/teacher/course/${courseId}/${chapterId}`);
+    router.push(`/teacher/course/${courseId}/chapters/${chapterId}`);
   };
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {

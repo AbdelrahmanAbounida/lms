@@ -83,6 +83,56 @@ export const editCourse = async ({
   }
 };
 
+export const editChapter = async ({
+  data,
+  courseId,
+  chapterId,
+}: {
+  data: any;
+  courseId: any;
+  chapterId: any;
+}) => {
+  const session = await auth();
+
+  try {
+    if (!session || !session.user || !session.user.id) {
+      return { error: "unauthorized" };
+    }
+
+    const chapter = await prismadb.chapter.findUnique({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      },
+    });
+
+    if (!chapter) {
+      return { error: "Chapter doesn't exist" };
+    }
+
+    await prismadb.chapter.update({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      },
+      data: {
+        ...data,
+      },
+    });
+
+    return { success: "Chapter updated successfully" };
+  } catch (error: any) {
+    console.log({ error });
+
+    // if (error?.meta?.target === "Chapter_title_key") {
+    //   return {
+    //     error: "There is a course with the same title. Please change title",
+    //   };
+    // }
+    return { error: "Failed to update this item" };
+  }
+};
+
 export const getAllCategories = async () => {
   try {
     const categories = await prismadb.category.findMany({
