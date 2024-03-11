@@ -42,3 +42,14 @@ Cross-origin resource sharing (CORS)
 - Create access key
 - Application running outside AWS
 - copy keys 
+
+##############################################################################
+##############################################################################
+# Video Hosting solutions 
+####################################
+
+1- vimeo
+2- Mux
+3- AWS 
+4- wistia
+

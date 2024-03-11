@@ -3,7 +3,6 @@ import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserbyId } from "./lib/user";
 import { prismadb } from "./lib/db";
-import { getTokenByuserEmail } from "./lib/tokens";
 import { userRole } from "@prisma/client";
 
 /**

@@ -2,12 +2,13 @@ import { auth } from "@/auth";
 import { prismadb } from "@/lib/db";
 import { redirect } from "next/navigation";
 import React from "react";
-import ChapterTitleForm from "../_components/chapter-title-form";
+import ChapterTitleForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-title-form";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
-import ChapterDescriptionForm from "../_components/chapter-description-form";
+import ChapterDescriptionForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-description-form";
 import { IoVideocamOutline } from "react-icons/io5";
-import ChapterAccessSettingForm from "../_components/chapter-access-settings-form";
+import ChapterAccessSettingForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-access-settings-form";
+import ChapterVideoForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-video-form";
 
 const ChapterEditPage = async ({
   params,
@@ -47,35 +48,36 @@ const ChapterEditPage = async ({
       </div>
 
       <div className="flex flex-col gap-1 mt-10">
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-3 w-[95%] 2xl:max-w-[80%]  mx-auto 2xl:ml-9">
-          {/** Chapter Title, Description */}
-          <div className="flex flex-col gap-7">
-            <div className="flex items-center gap-2  ">
-              <div className="bg-green-50 rounded-full">
-                <IconBadge
-                  icon={MdOutlineDashboardCustomize}
-                  size={"lg"}
-                  variant={"ghost"}
-                />
+        <div className="mt-10 grid grid-cols-1 xl:grid-cols-2 gap-3  px-7 mx-auto w-full ">
+          {/*** Column (1) ***/}
+          <div className="flex flex-col gap-5">
+            {/** Chapter Title, Description */}
+            <div className="flex flex-col gap-7">
+              <div className="flex items-center gap-2  ">
+                <div className="bg-green-50 rounded-full">
+                  <IconBadge
+                    icon={MdOutlineDashboardCustomize}
+                    size={"lg"}
+                    variant={"ghost"}
+                  />
+                </div>
+                <h1 className="font-medium text-2xl">Customize Your course</h1>
               </div>
-              <h1 className="font-medium text-2xl">Customize Your course</h1>
+              <ChapterTitleForm
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+                title={chapter.title}
+              />
+
+              <ChapterDescriptionForm
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+                description={chapter.description as string}
+              />
             </div>
-            <ChapterTitleForm
-              courseId={params.courseId}
-              chapterId={params.chapterId}
-              title={chapter.title}
-            />
 
-            <ChapterDescriptionForm
-              courseId={params.courseId}
-              chapterId={params.chapterId}
-              description={chapter.description as string}
-            />
-          </div>
-
-          <div className="flex flex-col gap-7 ml-7">
             {/** Access Settings */}
-            <div className="flex items-center gap-2  ">
+            <div className="flex items-center  mt-7 ">
               <div className="bg-green-50 rounded-full">
                 <IconBadge
                   icon={IoVideocamOutline}
@@ -90,6 +92,10 @@ const ChapterEditPage = async ({
               chapterId={params.chapterId}
               isFree={chapter.isFree}
             />
+          </div>
+
+          {/*** Column (2) ***/}
+          <div className="flex flex-col gap-7 lg:ml-7">
             {/** Adding Mux Video */}
             <div className="flex items-center gap-2  ">
               <div className="bg-green-50 rounded-full">
@@ -101,6 +107,12 @@ const ChapterEditPage = async ({
               </div>
               <h1 className="font-medium text-2xl">Add a Video</h1>
             </div>
+
+            <ChapterVideoForm
+              courseId={chapter.courseId}
+              chapterId={chapter.id}
+              chapter={chapter}
+            />
           </div>
         </div>
       </div>

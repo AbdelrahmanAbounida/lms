@@ -124,13 +124,6 @@ const CourseChapterForm = ({
                 onEdit={onEdit}
                 onReorder={onReorder}
               />
-              // <div>
-              //   {chapters.map((chapter, index) => (
-              //     <div key={index} className="">
-              //       {chapter.title}
-              //     </div>
-              //   ))}
-              // </div>
             )}{" "}
           </div>
         ) : (
