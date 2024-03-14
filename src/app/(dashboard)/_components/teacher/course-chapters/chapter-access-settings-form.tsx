@@ -13,10 +13,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { editChapter } from "@/actions/teacher/courses";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import { editChapter } from "@/actions/teacher/chapters";
 
 const ChapterAccessSettingForm = ({
   isFree,

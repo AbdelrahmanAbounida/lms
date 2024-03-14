@@ -24,7 +24,7 @@ const PropfileSettings = ({ image, name, email }: profileSettingsProps) => {
       <DropdownMenuTrigger className="">
         <Avatar className="bg-green-100">
           <AvatarImage src={image} />
-          <AvatarFallback className={cn(!image && "bg-green-50")}>
+          <AvatarFallback className={cn(!image && "bg-green-600 text-white")}>
             {name ? name?.slice(0, 2) : email?.slice(0, 2)}
           </AvatarFallback>
         </Avatar>

@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { editChapter, editCourse } from "@/actions/teacher/courses";
+import { editChapter } from "@/actions/teacher/chapters";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

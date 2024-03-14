@@ -20,7 +20,7 @@ const Navbar = () => {
   const [routeLoading, setrouteLoading] = useState(false);
 
   return (
-    <div className="px-3 w-full text-md py-3 shadow-sm flex items-center justify-between border-b  mb-3">
+    <div className="px-3 w-full text-md py-3 shadow-sm flex items-center justify-between border-b  ">
       <Sheet>
         <SheetTrigger asChild className="md:hidden  ">
           <Button variant={"ghost"}>
@@ -46,7 +46,7 @@ const Navbar = () => {
               className="px-7 py-0 space-x-2 justify-between flex items-center "
             >
               <RxExit size={17} />
-              <span>Exit</span>
+              <span>Student Mode</span>
             </Button>
           ) : (
             <Button variant={"secondary"} disabled>
@@ -58,7 +58,7 @@ const Navbar = () => {
           <Button
             onClick={() => {
               setrouteLoading(true);
-              router.push("/teacher/course/all");
+              router.push("/teacher/all");
               setrouteLoading(false);
             }}
             variant={"secondary"}

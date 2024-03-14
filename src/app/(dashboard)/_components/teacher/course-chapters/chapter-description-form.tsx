@@ -13,11 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { editChapter } from "@/actions/teacher/courses";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Preview from "./preview";
 import Editor from "./editor";
+import { editChapter } from "@/actions/teacher/chapters";
 
 const ChapterDescriptionForm = ({
   description,

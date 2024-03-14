@@ -13,17 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  createCourseChapter,
-  editCourse,
-  reorderChapters,
-} from "@/actions/teacher/courses";
+import { editCourse, reorderChapters } from "@/actions/teacher/courses";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Chapter } from "@prisma/client";
 import { ChapterList } from "../course-chapters/chapter-list";
 import { Loader2 } from "lucide-react";
+import { createCourseChapter } from "@/actions/teacher/chapters";
 
 const CourseChapterForm = ({
   chapters,

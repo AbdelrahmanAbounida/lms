@@ -41,10 +41,10 @@ export const retrieveAsset = async ({ assetId }: { assetId: string }) => {
   // return an upload with its id >> note: it could have assetid but not playback
   // but mux.video.assets >> will return an object if the video is ready and has playbackid
   try {
-    const asset = await mux.video.assets.retrieve(assetId); // .assets
+    const asset = await mux.video.assets.retrieve(assetId); // .uploads
     return asset;
   } catch (error) {
-    console.log({ uploadError: error });
+    // console.log({ uploadError: error });
     return;
   }
 };
@@ -122,13 +122,16 @@ export const deleteMux = async ({
       });
 
       // delete it from both mux and prisma
-      const asset = await mux.video.assets.retrieve(existingMux.assetId);
+      const asset = await mux.video.uploads.retrieve(existingMux.assetId);
       if (asset) {
         await mux.video.assets.delete(existingMux.assetId);
       }
     }
+
+    return { success: "Mux data has been deleted" };
   } catch (error) {
     console.log({ del_error: error });
+    return { error: "Something went wrong" };
   }
 };
 

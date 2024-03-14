@@ -11,11 +11,11 @@ import { redirect } from "next/navigation";
 import React from "react";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { BsList } from "react-icons/bs";
-// import { FaThList } from "react-icons/fa";
-import { FaFileAlt } from "react-icons/fa";
 import CourseAttachmentForm from "@/app/(dashboard)/_components/teacher/course/course-attachment-form.";
 import CourseChapterForm from "@/app/(dashboard)/_components/teacher/course/course-chapter-form";
 import { BsFillFilePdfFill } from "react-icons/bs";
+import CourseActions from "@/app/(dashboard)/_components/teacher/course/course-actions";
+import Banner from "@/app/(dashboard)/_components/banner";
 
 interface Params {
   courseId: string;
@@ -32,7 +32,7 @@ const Coursepage = async ({ params }: { params: Params }) => {
     currentCourse?.price,
     currentCourse?.imageUrl,
     currentCourse?.categoryId,
-    // currentCourse?.chapters.some((chapter) => chapter.isPublished),
+    currentCourse?.chapters.some((chapter) => chapter.isPublished),
   ];
 
   const totalfields = requiredFields.length;
@@ -44,14 +44,27 @@ const Coursepage = async ({ params }: { params: Params }) => {
     return redirect("/teacher/course/all");
   }
   return (
-    <div className="w-full flex p-4 flex-col gap-5">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-medium">Course Setup</h1>
+    <div className="w-full flex  flex-col gap-5">
+      {!currentCourse.isPublished ? (
+        <Banner
+          variant={currentCourse.isPublished ? "success" : "warning"}
+          label={
+            currentCourse.isPublished
+              ? "This Course is published now."
+              : "This Course is unpublished. it will not be visible to your students"
+          }
+        />
+      ) : (
+        <></>
+      )}
 
-        <div className="text-slate-600 text-md">
-          Complete all fields {completionText}
-        </div>
-      </div>
+      <CourseActions
+        courseId={courseId}
+        completedFields={completedFields}
+        courseName={currentCourse.title}
+        isPublished={currentCourse.isPublished}
+        requiredFields={requiredFields.length}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full 2xl:max-w-[92%] 2xl:mx-auto">
         <div className="flex flex-col gap-5  mt-12">

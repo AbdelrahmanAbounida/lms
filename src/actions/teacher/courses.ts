@@ -2,8 +2,31 @@
 
 import { auth } from "@/auth";
 import { prismadb } from "@/lib/db";
-import { Chapter } from "@prisma/client";
+import { deleteChapter } from "./chapters";
 
+// ************************
+// Retrieve course
+// ************************
+export const getCourseById = async ({ courseId }: { courseId: string }) => {
+  const course = await prismadb.course.findUnique({
+    where: {
+      id: courseId,
+    },
+    include: {
+      chapters: true,
+    },
+  });
+
+  if (!course) {
+    return { error: "Course doesn't exist" };
+  }
+
+  return { success: course };
+};
+
+// ************************
+// Create course
+// ************************
 export const createCourse = async ({
   courseTitle,
 }: {
@@ -37,6 +60,9 @@ export const createCourse = async ({
   }
 };
 
+// ************************
+// Edit course
+// ************************
 export const editCourse = async ({
   data,
   courseId,
@@ -44,18 +70,19 @@ export const editCourse = async ({
   data: any;
   courseId: any;
 }) => {
-  const session = await auth();
-
   try {
+    const session = await auth();
     if (!session || !session.user || !session.user.id) {
       return { error: "unauthorized" };
     }
 
-    const course = await prismadb.course.findFirst({
-      where: {
-        id: courseId,
-      },
-    });
+    const resp = await getCourseById({ courseId });
+
+    if (resp.error) {
+      return { error: resp.error };
+    }
+
+    const course = resp.success;
 
     if (!course) {
       return { error: "Course doesn't exist" };
@@ -83,56 +110,9 @@ export const editCourse = async ({
   }
 };
 
-export const editChapter = async ({
-  data,
-  courseId,
-  chapterId,
-}: {
-  data: any;
-  courseId: any;
-  chapterId: any;
-}) => {
-  const session = await auth();
-
-  try {
-    if (!session || !session.user || !session.user.id) {
-      return { error: "unauthorized" };
-    }
-
-    const chapter = await prismadb.chapter.findUnique({
-      where: {
-        id: chapterId,
-        courseId: courseId,
-      },
-    });
-
-    if (!chapter) {
-      return { error: "Chapter doesn't exist" };
-    }
-
-    await prismadb.chapter.update({
-      where: {
-        id: chapterId,
-        courseId: courseId,
-      },
-      data: {
-        ...data,
-      },
-    });
-
-    return { success: "Chapter updated successfully" };
-  } catch (error: any) {
-    console.log({ error });
-
-    // if (error?.meta?.target === "Chapter_title_key") {
-    //   return {
-    //     error: "There is a course with the same title. Please change title",
-    //   };
-    // }
-    return { error: "Failed to update this item" };
-  }
-};
-
+// ************************
+// all categories for course
+// ************************
 export const getAllCategories = async () => {
   try {
     const categories = await prismadb.category.findMany({
@@ -147,53 +127,9 @@ export const getAllCategories = async () => {
   }
 };
 
-export const createCourseChapter = async ({
-  title,
-  courseId,
-}: {
-  title: string;
-  courseId: string;
-}) => {
-  try {
-    // check if course exists
-
-    const course = await prismadb.course.findFirst({
-      where: {
-        id: courseId,
-      },
-      include: {
-        chapters: {
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-      },
-    });
-
-    if (!course) {
-      return { error: "Course doesn't exist" };
-    }
-    // last chapters
-    const newPosition = course.chapters.reduce((maxPosition, chapter) => {
-      return Math.max(maxPosition, chapter.position);
-    }, 1);
-
-    // create course
-    await prismadb.chapter.create({
-      data: {
-        courseId,
-        title,
-        position: newPosition + 1,
-      },
-    });
-
-    return { success: "chapter created successfully" };
-  } catch (error) {
-    console.log({ error });
-    return { error: "Something went wrong" };
-  }
-};
-
+// ************************
+// Reorder course chapters
+// ************************
 export const reorderChapters = async ({
   courseId,
   orderedChapters,
@@ -214,6 +150,144 @@ export const reorderChapters = async ({
       });
     }
     return { success: "Orderd successfully" };
+  } catch (error) {
+    console.log({ error });
+    return { error: "Something went wrong" };
+  }
+};
+
+// ************************
+// Publish Course
+// ************************
+export const publishCourse = async ({ courseId }: { courseId: string }) => {
+  try {
+    // check auth
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      return { error: "unauthorized" };
+    }
+
+    // check if course exists
+    const resp = await getCourseById({ courseId });
+    const course = resp.success;
+
+    if (resp.error) {
+      return { error: resp.error };
+    }
+    if (!course) {
+      return { error: "Course doesn't exist" };
+    }
+
+    // check if chapter has required fields before publishing
+
+    const requierdFields = [
+      course.title,
+      course.description,
+      course.imageUrl,
+      course.price,
+      course.chapters.some((chapter) => chapter.isPublished),
+      course.categoryId,
+    ];
+    const completedFields = requierdFields.filter(Boolean).length === 6;
+
+    if (!completedFields) {
+      return { error: "Complete all required fields to publish the course" };
+    }
+
+    // publish the course
+    await prismadb.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        isPublished: true,
+      },
+    });
+
+    return { success: "Course has been published sucecssfully" };
+  } catch (error) {
+    console.log({ error });
+    return { error: "Something went wrong" };
+  }
+};
+
+// ************************
+// Unpublish Course
+// ************************
+export const unpublishCourse = async ({ courseId }: { courseId: string }) => {
+  try {
+    // check auth
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      return { error: "unauthorized" };
+    }
+
+    // check if course exists
+    const resp = await getCourseById({ courseId });
+    const course = resp.success;
+
+    if (resp.error) {
+      return { error: resp.error };
+    }
+    if (!course) {
+      return { error: "Course doesn't exist" };
+    }
+
+    // publish the course
+    await prismadb.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        isPublished: false,
+      },
+    });
+
+    return { success: "Course is un published now" };
+  } catch (error) {
+    console.log({ error });
+    return { error: "Something went wrong" };
+  }
+};
+
+// ************************
+// Delete Course
+// ************************
+export const deleteCourse = async ({ courseId }: { courseId: string }) => {
+  try {
+    // check auth
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      return { error: "unauthorized" };
+    }
+
+    // check if course exists
+    const resp = await getCourseById({ courseId });
+    const course = resp.success;
+
+    if (resp.error) {
+      return { error: resp.error };
+    }
+    if (!course) {
+      return { error: "Course doesn't exist" };
+    }
+
+    // delete course chapters
+    for (const chapter of course.chapters) {
+      let resp = await deleteChapter({ courseId, chapterId: chapter.id });
+      if (resp.error) {
+        return { error: resp.error };
+      }
+    }
+
+    // delete the course
+    await prismadb.course.delete({
+      where: {
+        id: courseId,
+      },
+    });
+
+    return { success: "Course has been deleted successfully" };
   } catch (error) {
     console.log({ error });
     return { error: "Something went wrong" };

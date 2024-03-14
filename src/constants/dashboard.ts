@@ -13,7 +13,7 @@ export interface SidebarItemProps {
 export const sidebarTeacherItems: SidebarItemProps[] = [
   {
     title: "My Courses",
-    href: "/teacher/course/all",
+    href: "/teacher/all",
     icon: FaList,
   },
   {

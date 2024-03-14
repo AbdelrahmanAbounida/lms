@@ -9,6 +9,12 @@ import ChapterDescriptionForm from "@/app/(dashboard)/_components/teacher/course
 import { IoVideocamOutline } from "react-icons/io5";
 import ChapterAccessSettingForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-access-settings-form";
 import ChapterVideoForm from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-video-form";
+import { ArrowLeft, Trash } from "lucide-react";
+import Banner from "@/app/(dashboard)/_components/banner";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import ConfirmModal from "@/app/(dashboard)/_components/teacher/modals/confirm-modal";
+import ChapterActions from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-actions";
 
 const ChapterEditPage = async ({
   params,
@@ -40,12 +46,36 @@ const ChapterEditPage = async ({
 
   return (
     <div className="flex flex-col space-y-5 ">
-      <div className="flex flex-col ml-3 mt-7">
-        <div className="text-3xl font-medium">Chapter Setup</div>
-        <div className="text-sm text-slate-500 mt-1 ml-1">
-          Complete all fields ({requiredFields.length}/{completedFields})
-        </div>
-      </div>
+      {!chapter.isPublished ? (
+        <Banner
+          variant={chapter.isPublished ? "success" : "warning"}
+          label={
+            chapter.isPublished
+              ? "This chapter is published now it will be visiable once you publish the course"
+              : "This chapter is unpublished. it will not be visible to your students event if the course is published"
+          }
+        />
+      ) : (
+        <></>
+      )}
+      <Link
+        href={`/teacher/course/${chapter.courseId}`}
+        className="text-md mt-4 flex items-center ml-7 text-slate-700"
+      >
+        <ArrowLeft className="h-4 w-4 " />
+        Back to course setup
+      </Link>
+
+      {/** Chapter setup title, Actions  */}
+      <ChapterActions
+        completedFields={completedFields}
+        requiredFields={requiredFields.length}
+        courseId={chapter.courseId}
+        chapterId={chapter.id}
+        isPublished={chapter.isPublished}
+        chapterName={chapter.title}
+        // onConfirm={deleteChapter}
+      />
 
       <div className="flex flex-col gap-1 mt-10">
         <div className="mt-10 grid grid-cols-1 xl:grid-cols-2 gap-3  px-7 mx-auto w-full ">
@@ -68,7 +98,6 @@ const ChapterEditPage = async ({
                 chapterId={params.chapterId}
                 title={chapter.title}
               />
-
               <ChapterDescriptionForm
                 courseId={params.courseId}
                 chapterId={params.chapterId}
