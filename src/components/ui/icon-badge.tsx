@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { LucideIcon } from "lucide-react";
 import React from "react";
 import { IconType } from "react-icons";
 
@@ -30,7 +31,7 @@ const backgroundVariants = cva(
 
 export interface IconBadgeProps
   extends VariantProps<typeof backgroundVariants> {
-  icon: IconType;
+  icon: IconType | LucideIcon;
 }
 
 export const IconBadge = ({ variant, size, icon: Icon }: IconBadgeProps) => {

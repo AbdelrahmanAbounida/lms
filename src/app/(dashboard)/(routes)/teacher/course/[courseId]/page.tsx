@@ -35,10 +35,9 @@ const Coursepage = async ({ params }: { params: Params }) => {
     currentCourse?.chapters.some((chapter) => chapter.isPublished),
   ];
 
-  const totalfields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
-
-  const completionText = `(${completedFields}/${totalfields})`;
+  // const totalfields = requiredFields.length;
+  // const completionText = `(${completedFields}/${totalfields})`;
 
   if (!currentCourse) {
     return redirect("/teacher/course/all");

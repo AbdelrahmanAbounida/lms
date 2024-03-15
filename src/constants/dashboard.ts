@@ -36,7 +36,7 @@ export const sidebarStudentItems: SidebarItemProps[] = [
   },
   {
     title: "Courses",
-    href: "/student/courses",
+    href: "/student/browse",
     icon: FaList,
   },
 ];

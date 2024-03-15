@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { RxExit } from "react-icons/rx";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import SearchInput from "./student/search-input";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -31,6 +32,10 @@ const Navbar = () => {
           <SideBar />
         </SheetContent>
       </Sheet>
+
+      <div className="hidden xl:flex ml-auto w-[550px] ">
+        <SearchInput />
+      </div>
 
       <div className="  md:ml-auto md:mr-3 space-x-3 flex items-center ">
         {isTeacherPage ? (

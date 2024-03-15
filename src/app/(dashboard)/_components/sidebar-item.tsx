@@ -11,9 +11,10 @@ interface itemProps extends SidebarItemProps {
 
 const SidebarItem = (itemprops: itemProps) => {
   const currentPath = usePathname();
+  const urlPart = itemprops.href.split("/").splice(0, 3).join("/");
   const isActive =
     itemprops.href == currentPath ||
-    (currentPath.startsWith(itemprops.href) && itemprops.href !== "/");
+    (currentPath.startsWith(urlPart) && urlPart !== "/");
 
   return (
     <Link

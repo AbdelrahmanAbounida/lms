@@ -1,15 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import ConfirmModal from "../modals/confirm-modal";
 import toast from "react-hot-toast";
 import Spinner from "@/app/(auth)/_components/spinner";
 import { useRouter } from "next/navigation";
-import {
-  deleteCourse,
-  publishCourse,
-  unpublishCourse,
-} from "@/actions/teacher/courses";
+import { publishCourse, unpublishCourse } from "@/actions/teacher/courses";
+import DeleteCourseAction from "./delete-course-action";
+import { useConfetti } from "@/hooks/use-confetti";
 
 const CourseActions = ({
   completedFields,
@@ -25,7 +22,7 @@ const CourseActions = ({
   courseName: string;
 }) => {
   const router = useRouter();
-  console.log({ isPublished });
+  const confetti = useConfetti();
   // publish course
   const handlePublishingCourse = async () => {
     try {
@@ -43,6 +40,9 @@ const CourseActions = ({
           success: `${courseName} has been published `,
         });
       }
+      if (!isPublished) {
+        confetti.onOpenConfetti();
+      }
       router.refresh();
     } catch (error) {
       console.log({ error });
@@ -51,25 +51,7 @@ const CourseActions = ({
     }
   };
 
-  // delete course
-  const handledeleteCourse = async () => {
-    try {
-      setisDeleting(true);
-      toast.promise(deleteCourse({ courseId }), {
-        error: `Failed to delete ${courseName}`,
-        loading: `Deleting ${courseName}`,
-        success: `${courseName} has been deleted`,
-      });
-      router.push(`/teacher/all`);
-    } catch (error) {
-      console.log({ error });
-    } finally {
-      setisDeleting(false);
-    }
-  };
-
   const [ispublishing, setispublishing] = useState(false);
-  const [isDeleting, setisDeleting] = useState(false);
 
   return (
     <div className="flex justify-between px-7 mt-11  w-full mx-auto">
@@ -83,9 +65,7 @@ const CourseActions = ({
       <div className="flex justify-between gap-3 px-9 items-center p-5">
         <Button
           onClick={handlePublishingCourse}
-          disabled={
-            completedFields !== requiredFields || ispublishing || isDeleting
-          }
+          disabled={completedFields !== requiredFields || ispublishing}
           variant={"outline"}
           className="px-9"
         >
@@ -101,7 +81,7 @@ const CourseActions = ({
           )}
         </Button>
 
-        <ConfirmModal
+        {/* <ConfirmModal
           loading={isDeleting}
           isDestroy
           onConfirm={handledeleteCourse}
@@ -113,7 +93,12 @@ const CourseActions = ({
           >
             Delete
           </Button>
-        </ConfirmModal>
+        </ConfirmModal> */}
+        <DeleteCourseAction
+          courseId={courseId}
+          courseName={courseName}
+          type="button"
+        />
       </div>
     </div>
   );

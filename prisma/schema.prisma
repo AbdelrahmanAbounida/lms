@@ -1,6 +1,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -65,7 +66,7 @@ model Course {
   id String @id @default(auto()) @map("_id") @db.ObjectId 
   userId String @db.ObjectId
   categoryId String? @db.ObjectId
-  title String @db.String @unique
+  title String @db.String //@unique
   description String? @db.String 
   imageUrl String? @db.String 
   price Float? @default(0.0)
@@ -78,11 +79,11 @@ model Course {
   chapters Chapter[]
   purchases Purchase[]
 
-
   user User @relation(fields: [userId],references: [id], onDelete: Cascade)
   category Category? @relation(fields: [categoryId],references: [id], onDelete: Cascade)
 
   @@index([categoryId])
+  @@fulltext([title])
 }
 
 model Category {

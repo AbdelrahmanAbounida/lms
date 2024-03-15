@@ -128,6 +128,46 @@ export const getAllCategories = async () => {
 };
 
 // ************************
+// specific category
+// ************************
+export const getCategoryById = async ({
+  categoryId,
+}: {
+  categoryId: string;
+}) => {
+  try {
+    const category = await prismadb.category.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+    return category;
+  } catch (error) {
+    console.log({ error });
+    return;
+  }
+};
+// ************************
+// all categories for course
+// ************************
+export const getAllCourses = async ({ userId }: { userId: string }) => {
+  try {
+    const courses = await prismadb.course.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return courses;
+  } catch (error) {
+    console.log({ error });
+    return [];
+  }
+};
+
+// ************************
 // Reorder course chapters
 // ************************
 export const reorderChapters = async ({
