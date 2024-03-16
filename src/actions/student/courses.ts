@@ -15,7 +15,6 @@ export const getSearchCourses = async ({
   search: boolean;
 }) => {
   try {
-    console.log({ title });
     const courses = await prismadb.course.findMany({
       where: {
         isPublished: true,

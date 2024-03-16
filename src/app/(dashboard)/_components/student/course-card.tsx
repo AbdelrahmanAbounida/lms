@@ -35,7 +35,7 @@ const CourseCard = ({
   category: string;
 }) => {
   return (
-    <Link href={`/student/courses/${id}`} className=" hover:shadow-sm ">
+    <Link href={`/course/${id}`} className=" hover:shadow-sm ">
       <Card className="w-full hover:bg-slate-100/50 transition-all  rounded-lg p-3 h-full relative">
         <CardContent className="w-full relative aspect-video rounded-md overflow-hidden">
           <Image

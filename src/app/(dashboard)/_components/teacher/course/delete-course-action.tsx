@@ -5,8 +5,6 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmModal from "../modals/confirm-modal";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 const DeleteCourseAction = ({

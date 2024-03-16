@@ -37,7 +37,6 @@ const BrowseStudent = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 p-6  gap-6">
         {courses.map((course, index) => (
-          // <div>{course.title}</div>
           <CourseCard
             key={index}
             id={course.id}
