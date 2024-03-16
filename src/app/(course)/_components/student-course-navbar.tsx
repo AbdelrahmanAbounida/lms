@@ -6,8 +6,6 @@ import StudentCourseSidebar, {
   StudentCourseSidebarProps,
 } from "./student-course-sidebar";
 import PropfileSettings from "@/app/(dashboard)/_components/profile-avatar";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
 import { RxExit } from "react-icons/rx";
 import Link from "next/link";
 

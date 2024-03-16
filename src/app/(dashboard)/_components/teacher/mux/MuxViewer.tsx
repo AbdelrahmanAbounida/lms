@@ -4,9 +4,9 @@ export const runtime = "edge";
 
 const MuxViewer = ({ playbackId }: { playbackId: string }) => {
   return (
-    <div className="bg-black aspect-video w-full h-full flex">
+    <div className="bg-black aspect-video w-full flex rounded-lg relative ">
       <MuxPlayer
-        className="w-full"
+        className="w-full rounded-lg"
         playbackId={playbackId}
         metadata={{ player_name: "with-mux-video" }}
         accentColor="rgb(220 38 38)"
