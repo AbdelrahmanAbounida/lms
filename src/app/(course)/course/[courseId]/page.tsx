@@ -26,6 +26,4 @@ const StudentCourse = async ({ params }: StudentCourseParams) => {
   );
 };
 
-console.log("asd");
-
 export default StudentCourse;
