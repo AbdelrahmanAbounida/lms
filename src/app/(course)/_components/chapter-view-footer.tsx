@@ -2,7 +2,7 @@ import { handlePayment } from "@/actions/checkout/checkout";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
 import { Purchase } from "@prisma/client";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -13,6 +13,7 @@ const ChapterViewFooter = ({
   isFree,
   purchase,
   handleProgressOnVideoEnd,
+  isCompleted,
 }: {
   price: number;
   courseId: string;
@@ -20,6 +21,7 @@ const ChapterViewFooter = ({
   isFree: boolean;
   purchase: Purchase;
   handleProgressOnVideoEnd: any;
+  isCompleted: boolean;
 }) => {
   const [isLoading, setisLoading] = useState(false);
 
@@ -56,6 +58,7 @@ const ChapterViewFooter = ({
         </Button>
       ) : (
         <Button
+          variant={isCompleted ? "outline" : "default"}
           disabled={isLoading}
           onClick={async () => {
             setisLoading(true);
@@ -63,7 +66,16 @@ const ChapterViewFooter = ({
             setisLoading(false);
           }}
         >
-          Complete and continue <ArrowRight className="w-5 h-5" />{" "}
+          {isCompleted ? (
+            <div className="flex gap-2">
+              Not Completed{" "}
+              <X className="w-5 h-5 rounded-full bg-slate-200/80 p-1 " />{" "}
+            </div>
+          ) : (
+            <div className="flex gap-1">
+              Complete and continue <ArrowRight className="w-5 h-5 p-1" />{" "}
+            </div>
+          )}
         </Button>
       )}
     </div>

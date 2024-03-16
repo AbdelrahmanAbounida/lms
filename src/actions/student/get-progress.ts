@@ -72,8 +72,18 @@ export const updateUserProgress = async ({
         isCompleted,
       },
     });
-    console.log({ userProgress });
-    return userProgress;
+
+    const chapter = await prismadb.chapter.findUnique({
+      where: {
+        id: chapterId,
+      },
+    });
+
+    const progress = await getUserProgress({
+      userId,
+      courseId: chapter?.courseId!,
+    });
+    return progress;
   } catch (error) {
     console.log({ error });
     return;

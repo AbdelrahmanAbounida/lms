@@ -44,21 +44,20 @@ const ChapterViedoViewer = ({
 
   const handleProgressOnVideoEnd = async () => {
     try {
-      console.log("enddddddd");
-      await updateUserProgress({
+      const progress = await updateUserProgress({
         userId,
         chapterId: chapter.id,
         isCompleted: !isCompleted,
       });
 
-      if (!isCompleted && !nextChapterId) {
+      if (!isCompleted && !nextChapterId && progress === 100) {
         onOpenConfetti();
-        router.refresh();
       }
       if (!isCompleted && nextChapterId) {
         toast.success("Chapter completed successfully");
         router.push(`/course/${course.id}/chapter/${nextChapterId}`);
       }
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
       console.log({ error });
@@ -89,6 +88,7 @@ const ChapterViedoViewer = ({
                 title={chapter.title}
                 purchase={purchase}
                 handleProgressOnVideoEnd={handleProgressOnVideoEnd}
+                isCompleted={isCompleted}
               />
             </div>
           </div>
@@ -103,6 +103,7 @@ const ChapterViedoViewer = ({
             title={chapter.title}
             purchase={purchase}
             handleProgressOnVideoEnd={handleProgressOnVideoEnd}
+            isCompleted={isCompleted}
           />
         )}
 

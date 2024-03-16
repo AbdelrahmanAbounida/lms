@@ -2,6 +2,7 @@
 
 import { prismadb } from "@/lib/db";
 import { getUserProgress } from "./get-progress";
+import { auth } from "@/auth";
 
 export const getSearchCourses = async ({
   userId,
@@ -65,4 +66,70 @@ export const getSearchCourses = async ({
   }
 };
 
-export const getCoursesWithProgress = async ({}: {}) => {};
+export const getStudentSignedCourses = async () => {
+  try {
+    const session = await auth();
+
+    if (!session || !session.user?.id) {
+      return {};
+    }
+
+    const userId = session.user?.id;
+
+    const purchasedCourse = await prismadb.purchase.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        course: {
+          include: {
+            purchases: {
+              where: {
+                userId,
+              },
+            },
+            chapters: {
+              select: {
+                id: true,
+              },
+              where: {
+                isPublished: true,
+              },
+            },
+            category: true,
+          },
+        },
+      },
+    });
+
+    const coursesWithProgress = await Promise.all(
+      purchasedCourse.map(async (purchase) => {
+        const progress = await getUserProgress({
+          courseId: purchase.course.id,
+          userId,
+        });
+        return {
+          course: purchase.course,
+          progress,
+        };
+      })
+    );
+
+    const completedCourses = await coursesWithProgress.filter(
+      (course) => course.progress === 100
+    );
+    const nonCompletedCourses = Math.abs(
+      coursesWithProgress.length - completedCourses.length
+    );
+
+    const courses = coursesWithProgress.filter((course) => course.course);
+    return {
+      allcourses: courses,
+      completedCourses: completedCourses.length,
+      nonCompletedCourses,
+    };
+  } catch (error) {
+    console.log({ error });
+    return;
+  }
+};
