@@ -45,3 +45,37 @@ export const getUserProgress = async ({
     return 0;
   }
 };
+
+export const updateUserProgress = async ({
+  userId,
+  chapterId,
+  isCompleted,
+}: {
+  userId: string;
+  chapterId: string;
+  isCompleted: boolean;
+}) => {
+  try {
+    const userProgress = await prismadb.userProgress.upsert({
+      where: {
+        userId_chapterId: {
+          userId,
+          chapterId,
+        },
+      },
+      update: {
+        isCompleted,
+      },
+      create: {
+        userId,
+        chapterId,
+        isCompleted,
+      },
+    });
+    console.log({ userProgress });
+    return userProgress;
+  } catch (error) {
+    console.log({ error });
+    return;
+  }
+};

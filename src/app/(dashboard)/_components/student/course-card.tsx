@@ -69,23 +69,22 @@ const CourseCard = ({
               {price ? `${price} $` : "Free"}
             </div>
           </div>
-        </CardFooter>
-        {progress && (
+
           <div className="flex w-full flex-col gap-1">
             <Progress
               className="mt-3 text-emerald-600 rounded-sm"
               color="green"
-              value={33}
+              value={progress || 0}
             />
 
             <div
               className={cn(
-                "text-muted-foreground text-sm",
+                "text-muted-foreground text-sm font-medium",
                 progress === 100 && "text-emerald-700"
               )}
-            >{`${progress}% Complete`}</div>
+            >{`${progress || 0}% Complete`}</div>
           </div>
-        )}
+        </CardFooter>
       </Card>
     </Link>
   );

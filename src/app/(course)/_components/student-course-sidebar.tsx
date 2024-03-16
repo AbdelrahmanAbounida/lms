@@ -30,14 +30,14 @@ const StudentCourseSidebar = async ({
 }: StudentCourseSidebarProps) => {
   const userprogress = await getUserProgress({ courseId, userId });
 
-  const pur = await prismadb.purchase.findUnique({
-    where: {
-      userId_courseId: {
-        userId,
-        courseId,
-      },
-    },
-  });
+  // const pur = await prismadb.purchase.findUnique({
+  //   where: {
+  //     userId_courseId: {
+  //       userId,
+  //       courseId,
+  //     },
+  //   },
+  // });
 
   return (
     <div className="border-r border h-full w-full">
@@ -45,7 +45,7 @@ const StudentCourseSidebar = async ({
       <div className="flex p-3 items-center justify-center  top-0 left-0 w-full  border-b">
         <div className="flex flex-col w-full p-6 gap-1">
           <div className="text-xl font-medium">{title}</div>
-          <Progress value={userprogress || 10} className="mt-2" />
+          <Progress value={userprogress || 0} className="mt-2" />
 
           <div className="text-emerald-600 text-sm font-medium">
             {userprogress}% Complete

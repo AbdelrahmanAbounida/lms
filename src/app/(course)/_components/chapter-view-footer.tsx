@@ -12,12 +12,14 @@ const ChapterViewFooter = ({
   title,
   isFree,
   purchase,
+  handleProgressOnVideoEnd,
 }: {
   price: number;
   courseId: string;
   title: string;
   isFree: boolean;
   purchase: Purchase;
+  handleProgressOnVideoEnd: any;
 }) => {
   const [isLoading, setisLoading] = useState(false);
 
@@ -53,7 +55,14 @@ const ChapterViewFooter = ({
           Enroll for {formatPrice(price)}
         </Button>
       ) : (
-        <Button>
+        <Button
+          disabled={isLoading}
+          onClick={async () => {
+            setisLoading(true);
+            await handleProgressOnVideoEnd();
+            setisLoading(false);
+          }}
+        >
           Complete and continue <ArrowRight className="w-5 h-5" />{" "}
         </Button>
       )}

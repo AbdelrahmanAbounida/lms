@@ -6,19 +6,28 @@ import { Attachment, Chapter, Course, Purchase } from "@prisma/client";
 import ChapterViewFooter from "./chapter-view-footer";
 import { downloadAttachment } from "@/app/(dashboard)/_components/teacher/course/course-attachment-form.";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useConfetti } from "@/hooks/use-confetti";
+import { updateUserProgress } from "@/actions/student/get-progress";
 
 const ChapterViedoViewer = ({
+  userId,
   playbackId,
   chapter,
   course,
   purchase,
   attachments,
+  nextChapter,
+  isCompleted,
 }: {
+  userId: string;
   playbackId: string;
   chapter: Chapter;
   course: Course;
   purchase: Purchase;
   attachments: Attachment[];
+  nextChapter: Chapter;
+  isCompleted: boolean;
 }) => {
   const handleDownload = async ({ attachment }: { attachment: Attachment }) => {
     try {
@@ -28,11 +37,42 @@ const ChapterViedoViewer = ({
       toast.error("Something went wrong");
     }
   };
+
+  const router = useRouter();
+  const { onOpenConfetti } = useConfetti();
+  const nextChapterId = nextChapter?.id;
+
+  const handleProgressOnVideoEnd = async () => {
+    try {
+      console.log("enddddddd");
+      await updateUserProgress({
+        userId,
+        chapterId: chapter.id,
+        isCompleted: !isCompleted,
+      });
+
+      if (!isCompleted && !nextChapterId) {
+        onOpenConfetti();
+        router.refresh();
+      }
+      if (!isCompleted && nextChapterId) {
+        toast.success("Chapter completed successfully");
+        router.push(`/course/${course.id}/chapter/${nextChapterId}`);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log({ error });
+    }
+  };
+
   return (
     <div className="flex flex-col w-full px-5 xl:px-14 rounded-lg pt-6 relative">
       <div className=" relative aspect-video  rounded-lg ">
         {playbackId && (chapter.isFree || purchase) ? (
-          <MuxViewer playbackId={playbackId} />
+          <MuxViewer
+            playbackId={playbackId}
+            handleProgressOnVideoEnd={handleProgressOnVideoEnd}
+          />
         ) : (
           <div className="flex flex-col gap-y-1">
             <div className="text-secondary mb-0 xl:mb-36 rounded-md  absolute top-0 inset-0 w-full">
@@ -48,6 +88,7 @@ const ChapterViedoViewer = ({
                 price={course.price!}
                 title={chapter.title}
                 purchase={purchase}
+                handleProgressOnVideoEnd={handleProgressOnVideoEnd}
               />
             </div>
           </div>
@@ -61,6 +102,7 @@ const ChapterViedoViewer = ({
             price={course.price!}
             title={chapter.title}
             purchase={purchase}
+            handleProgressOnVideoEnd={handleProgressOnVideoEnd}
           />
         )}
 

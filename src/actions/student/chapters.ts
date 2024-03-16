@@ -81,14 +81,14 @@ export const getChapterData = async ({
       });
     }
 
-    // const userProgress = await prismadb.userProgress.findUnique({
-    //   where: {
-    //     userId_chapterId: {
-    //       chapterId,
-    //       userId: session.user.id,
-    //     },
-    //   },
-    // });
+    const userProgress = await prismadb.userProgress.findUnique({
+      where: {
+        userId_chapterId: {
+          chapterId,
+          userId: session.user.id,
+        },
+      },
+    });
 
     return {
       course,
@@ -97,8 +97,8 @@ export const getChapterData = async ({
       nextChapter,
       muxData,
       attachments,
-
-      //   userProgress,
+      userId: session.user.id,
+      userProgress,
     };
   } catch (error) {
     console.log({ chapterId });

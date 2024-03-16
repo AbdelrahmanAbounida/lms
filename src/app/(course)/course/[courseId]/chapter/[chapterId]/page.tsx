@@ -14,7 +14,16 @@ const StudentCoursChapterView = async ({
   if (!data) {
     return redirect("/");
   }
-  const { chapter, course, nextChapter, muxData, purchase, attachments } = data;
+  const {
+    chapter,
+    course,
+    nextChapter,
+    muxData,
+    purchase,
+    attachments,
+    userId,
+    userProgress,
+  } = data;
 
   const isLocked = !chapter.isFree && !purchase;
 
@@ -37,6 +46,9 @@ const StudentCoursChapterView = async ({
         course={course}
         purchase={purchase!}
         attachments={attachments}
+        userId={userId}
+        nextChapter={nextChapter!}
+        isCompleted={userProgress?.isCompleted!}
       />
     </div>
   );

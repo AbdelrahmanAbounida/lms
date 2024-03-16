@@ -2,7 +2,13 @@ import MuxPlayer from "@mux/mux-player-react";
 
 export const runtime = "edge";
 
-const MuxViewer = ({ playbackId }: { playbackId: string }) => {
+const MuxViewer = ({
+  playbackId,
+  handleProgressOnVideoEnd,
+}: {
+  playbackId: string;
+  handleProgressOnVideoEnd: () => void;
+}) => {
   return (
     <div className="aspect-video w-full flex rounded-lg relative mb-0  ">
       <MuxPlayer
@@ -10,6 +16,7 @@ const MuxViewer = ({ playbackId }: { playbackId: string }) => {
         playbackId={playbackId}
         metadata={{ player_name: "with-mux-video" }}
         accentColor="rgb(220 38 38)"
+        onEnded={handleProgressOnVideoEnd}
       />
     </div>
   );
