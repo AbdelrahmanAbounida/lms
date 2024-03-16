@@ -14,11 +14,9 @@ const StudentCoursChapterView = async ({
   if (!data) {
     return redirect("/");
   }
-  const { chapter, course, nextChapter, muxData, purchase } = data;
+  const { chapter, course, nextChapter, muxData, purchase, attachments } = data;
 
   const isLocked = !chapter.isFree && !purchase;
-
-  console.log({ isLocked });
 
   return (
     <div className="flex flex-col ">
@@ -32,8 +30,14 @@ const StudentCoursChapterView = async ({
       )}
 
       {/** video viewer in case user is locked , loading state, video in case of free */}
-      <ChapterViedoViewer playbackId={muxData?.playbackId!} />
       {/** purchase ui, go to next chapter button */}
+      <ChapterViedoViewer
+        playbackId={muxData?.playbackId!}
+        chapter={chapter}
+        course={course}
+        purchase={purchase!}
+        attachments={attachments}
+      />
     </div>
   );
 };

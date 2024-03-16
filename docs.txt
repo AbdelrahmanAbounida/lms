@@ -53,3 +53,14 @@ Cross-origin resource sharing (CORS)
 3- AWS 
 4- wistia
 
+##############################################################################
+##############################################################################
+# stripe
+####################################
+
+@/lib/stripe 
+actions/payment/payment 
+
+# webhook
+stripe login 
+stripe listen --forward-to localhost:3000/api/webhook

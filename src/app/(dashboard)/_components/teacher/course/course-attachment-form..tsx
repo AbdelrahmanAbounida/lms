@@ -12,6 +12,31 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { IoMdDownload } from "react-icons/io";
 import { CiCirclePlus } from "react-icons/ci";
 
+export const downloadAttachment = async ({
+  attachment,
+}: {
+  attachment: Attachment;
+}) => {
+  try {
+    const response = await fetch(attachment.url);
+    if (!response.ok) {
+      toast.error(`Failed to download attachment: ${response.statusText}`);
+      return;
+    }
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = attachment.name;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.log({ error });
+    toast.error("Something went wrong");
+  }
+};
+
 const CourseAttachmentForm = ({
   attachments,
   courseId,
@@ -23,30 +48,6 @@ const CourseAttachmentForm = ({
   const [deleteLoading, setdeleteLoading] = useState(false);
   const router = useRouter();
 
-  const downloadAttachment = async ({
-    attachment,
-  }: {
-    attachment: Attachment;
-  }) => {
-    try {
-      const response = await fetch(attachment.url);
-      if (!response.ok) {
-        toast.error(`Failed to download attachment: ${response.statusText}`);
-        return;
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = attachment.name;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.log({ error });
-      toast.error("Something went wrong");
-    }
-  };
   const handleDeleteAttachment = async ({
     attachment,
   }: {

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { resetPassword } from "@/actions/reset-password";
+import { resetPassword } from "@/actions/auth/reset-password";
 import AuthMessage from "../../_components/auth-message";
 import { Button } from "@/components/ui/button";
 import Spinner from "../../_components/spinner";

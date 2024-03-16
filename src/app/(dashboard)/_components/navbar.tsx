@@ -43,7 +43,7 @@ const Navbar = () => {
             <Button
               onClick={() => {
                 setrouteLoading(true);
-                router.push("/student/courses");
+                router.push("/student/browse");
                 setrouteLoading(false);
               }}
               variant={"secondary"}

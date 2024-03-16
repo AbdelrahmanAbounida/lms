@@ -4,7 +4,7 @@ export const runtime = "edge";
 
 const MuxViewer = ({ playbackId }: { playbackId: string }) => {
   return (
-    <div className="bg-black aspect-video w-full flex rounded-lg relative ">
+    <div className="aspect-video w-full flex rounded-lg relative mb-0  ">
       <MuxPlayer
         className="w-full rounded-lg"
         playbackId={playbackId}

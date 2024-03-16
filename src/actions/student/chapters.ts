@@ -20,6 +20,7 @@ export const getChapterData = async ({
     const course = await prismadb.course.findUnique({
       where: {
         id: courseId,
+        isPublished: true,
       },
     });
 
@@ -30,11 +31,15 @@ export const getChapterData = async ({
     const chapter = await prismadb.chapter.findUnique({
       where: {
         id: chapterId,
+        courseId,
       },
       include: {
         muxData: true,
       },
     });
+    if (!chapter) {
+      return;
+    }
     const purchase = await prismadb.purchase.findUnique({
       where: {
         userId_courseId: {
@@ -43,10 +48,6 @@ export const getChapterData = async ({
         },
       },
     });
-
-    if (!chapter) {
-      return;
-    }
 
     let muxData = null;
     let attachments: Attachment[] = [];
@@ -94,11 +95,14 @@ export const getChapterData = async ({
       purchase,
       chapter,
       nextChapter,
-      muxData: chapter.muxData,
+      muxData,
+      attachments,
+
       //   userProgress,
     };
   } catch (error) {
-    console.log({ error });
+    console.log({ chapterId });
+    console.log({ errrrrrrrrrrrrr: error });
     return;
   }
 };

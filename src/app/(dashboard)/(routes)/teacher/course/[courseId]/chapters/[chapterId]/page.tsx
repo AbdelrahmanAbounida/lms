@@ -12,8 +12,6 @@ import ChapterVideoForm from "@/app/(dashboard)/_components/teacher/course-chapt
 import { ArrowLeft, Trash } from "lucide-react";
 import Banner from "@/app/(dashboard)/_components/banner";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import ConfirmModal from "@/app/(dashboard)/_components/teacher/modals/confirm-modal";
 import ChapterActions from "@/app/(dashboard)/_components/teacher/course-chapters/chapter-actions";
 
 const ChapterEditPage = async ({

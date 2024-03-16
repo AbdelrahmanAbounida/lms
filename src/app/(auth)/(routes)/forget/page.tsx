@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "../../_components/spinner";
-import { sendResetPasswordEmail } from "@/actions/reset-password";
+import { sendResetPasswordEmail } from "@/actions/auth/reset-password";
 import AuthMessage from "../../_components/auth-message";
 
 const Forget = () => {
