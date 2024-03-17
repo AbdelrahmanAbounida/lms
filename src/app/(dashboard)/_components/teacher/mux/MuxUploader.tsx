@@ -21,7 +21,7 @@ const MuxCustomUploader = ({
 
   useEffect(() => {
     updateUpload();
-  }, []);
+  }, [chapter]);
 
   return upload?.url ? (
     <LibMuxUploader

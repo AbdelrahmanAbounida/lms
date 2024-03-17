@@ -66,12 +66,15 @@ const ChapterVideoForm = ({
             {chapter?.muxData?.assetId ? (
               playbackId ? (
                 <div className="relative aspect-video mt-2 border h-72 w-full">
-                  <MuxViewer playbackId={playbackId} />
+                  <MuxViewer
+                    playbackId={playbackId}
+                    handleProgressOnVideoEnd={() => {}}
+                  />
                 </div>
               ) : (
                 <div className="w-full items-center flex-col flex text-sm text-center justify-center text-slate-700  border p-5 h-52 rounded-md">
-                  Video can take a few minutes to process. reload the page if
-                  the video doesn't appear
+                  {`Video can take a few minutes to process. reload the page if
+                  the video doesn't appear`}
                   <Loader2 className="animate-spin mt-3 text-green-700" />
                 </div>
               )
