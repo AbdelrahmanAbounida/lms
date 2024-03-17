@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { registerSchema } from "@/schemas/auth-schemas";
-import { registerUser } from "@/actions/register";
+import { registerUser } from "@/actions/auth/register";
 import Spinner from "../../_components/spinner";
 import AuthMessage from "../../_components/auth-message";
 import { useSearchParams } from "next/navigation";

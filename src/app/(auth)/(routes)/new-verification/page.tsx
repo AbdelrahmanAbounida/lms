@@ -4,7 +4,7 @@ import AuthForm from "../../_components/auth-form";
 import Spinner from "../../_components/spinner";
 import { useRouter, useSearchParams } from "next/navigation";
 import AuthMessage from "../../_components/auth-message";
-import { verifyEmail } from "@/actions/new-verification";
+import { verifyEmail } from "@/actions/auth/new-verification";
 
 const TokenVerification = () => {
   const [errorMessage, seterrorMessage] = useState<string>("");

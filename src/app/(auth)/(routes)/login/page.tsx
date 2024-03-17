@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import AuthMessage from "../../_components/auth-message";
 import { loginSchema } from "@/schemas/auth-schemas";
-import { loginUser } from "@/actions/login";
+import { loginUser } from "@/actions/auth/login";
 import Spinner from "../../_components/spinner";
 import { useSearchParams } from "next/navigation";
 
