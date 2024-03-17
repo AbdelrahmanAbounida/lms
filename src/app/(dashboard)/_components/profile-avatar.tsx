@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { logout } from "@/actions/auth/logout";
 
 interface profileSettingsProps {
   image: string;
@@ -39,7 +40,10 @@ const PropfileSettings = ({ image, name, email }: profileSettingsProps) => {
         </DropdownMenuItem>
         {/* <DropdownMenuSeparator /> */}
 
-        <DropdownMenuItem className="cursor-pointer flex gap-2 font-medium my-1">
+        <DropdownMenuItem
+          onClick={() => logout()}
+          className="cursor-pointer flex gap-2 font-medium my-1"
+        >
           <AiOutlineLogout />
           Logout
         </DropdownMenuItem>
