@@ -21,7 +21,7 @@ import { loginUser } from "@/actions/auth/login";
 import Spinner from "../../_components/spinner";
 import { useSearchParams } from "next/navigation";
 
-const loginPage = () => {
+const LoginPage = () => {
   type loginType = z.infer<typeof loginSchema>;
 
   // check error in the url
@@ -156,4 +156,4 @@ const loginPage = () => {
   );
 };
 
-export default loginPage;
+export default LoginPage;
