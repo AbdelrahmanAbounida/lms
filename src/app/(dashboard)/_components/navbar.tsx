@@ -17,6 +17,7 @@ const Navbar = () => {
   const isTeacherPage = pathname.startsWith("/teacher");
   const router = useRouter();
   const user = useCurrentUser();
+  const isTeacher = user?.role === "TEACHER";
 
   const [routeLoading, setrouteLoading] = useState(false);
 
@@ -38,46 +39,47 @@ const Navbar = () => {
       </div>
 
       <div className="  md:ml-auto md:mr-3 space-x-3 flex items-center ">
-        {isTeacherPage ? (
-          !routeLoading ? (
+        {isTeacher &&
+          (isTeacherPage ? (
+            !routeLoading ? (
+              <Button
+                onClick={() => {
+                  setrouteLoading(true);
+                  router.push("/student/browse");
+                  setrouteLoading(false);
+                }}
+                variant={"secondary"}
+                size={"sm"}
+                className="px-7 py-0 space-x-2 justify-between flex items-center "
+              >
+                <RxExit size={17} />
+                <span>Student Mode</span>
+              </Button>
+            ) : (
+              <Button variant={"secondary"} disabled>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Loading...
+              </Button>
+            )
+          ) : !routeLoading ? (
             <Button
               onClick={() => {
                 setrouteLoading(true);
-                router.push("/student/browse");
+                router.push("/teacher/all");
                 setrouteLoading(false);
               }}
               variant={"secondary"}
               size={"sm"}
-              className="px-7 py-0 space-x-2 justify-between flex items-center "
+              className="px-7 py-0"
             >
-              <RxExit size={17} />
-              <span>Student Mode</span>
+              Teacher Mode
             </Button>
           ) : (
             <Button variant={"secondary"} disabled>
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               Loading...
             </Button>
-          )
-        ) : !routeLoading ? (
-          <Button
-            onClick={() => {
-              setrouteLoading(true);
-              router.push("/teacher/all");
-              setrouteLoading(false);
-            }}
-            variant={"secondary"}
-            size={"sm"}
-            className="px-7 py-0"
-          >
-            Teacher Mode
-          </Button>
-        ) : (
-          <Button variant={"secondary"} disabled>
-            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-            Loading...
-          </Button>
-        )}
+          ))}
 
         <PropfileSettings
           image={user?.image as string}
