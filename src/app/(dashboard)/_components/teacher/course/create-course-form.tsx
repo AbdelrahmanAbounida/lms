@@ -61,8 +61,8 @@ const CreateCourseForm = () => {
       <div className="flex flex-col justify-start border rounded-md p-10 shadow-md">
         <div className="text-xl font-medium text-start">Name Your Course</div>
         <div className="text-sm text-slate-500">
-          what would you like to name your course? Don't worry, you can change
-          this later.
+          {`what would you like to name your course? Don't worry, you can change
+          this later.`}
         </div>
         <Form {...form}>
           <form className="mt-7" onSubmit={form.handleSubmit(onSubmit)}>

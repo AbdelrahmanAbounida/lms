@@ -50,20 +50,20 @@ export const VerificationEmailTemplate = ({
         </svg>
         <Text style={paragraph}>Hi {userFirstname},</Text>
         <Text style={paragraph}>
-          Welcome to NextAuthCourse! We're excited to have you on board. To
+          {`Welcome to NextAuthCourse! We're excited to have you on board. To
           complete your registration and activate your account, please click on
-          the following verification link:
+          the following verification link:`}
         </Text>
 
         <Text style={paragraph}>
-          Please note that this link is only valid for just one hour. After
+          {`Please note that this link is only valid for just one hour. After
           that, you will need to request a new verification email. If you did
           not sign up for a NextAuthCourse account, please ignore this email. If
           you have any questions or need assistance, please don't hesitate to
-          contact our support team at{" "}
+          contact our support team at`}{" "}
           <Link href="abdelrahmanaboneda.com">abdelrahmanaboneda.com</Link> .
-          Thank you for choosing NextAuthCourse. We look forward to helping you
-          accelerate your AI development journey.
+          {`Thank you for choosing NextAuthCourse. We look forward to helping you
+          accelerate your AI development journey.`}
         </Text>
 
         <Text style={paragraph}>
