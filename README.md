@@ -8,10 +8,6 @@
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-000000?logo=next.js&logoColor=whitelabelColor=000000)
 ![SWR](https://img.shields.io/badge/SWR-FF6347?logo=vercel&logoColor=whitelabelColor=FF6347)
 
-## App Url (Vercel):
-
-[https://lms-theta-ecru.vercel.app/](https://lms-theta-ecru.vercel.app/)
-
 `List pf Courses: `
 <img src="assets/courses-list-teacher.png" alt="Courses List Teacher">
 
