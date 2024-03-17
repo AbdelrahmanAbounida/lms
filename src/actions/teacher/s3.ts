@@ -11,10 +11,10 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
 
 const s3Client = new S3Client({
-  region: process.env.AWS_BUCKET_REGION!,
+  region: process.env.AWS_BUCKET_REGIONN!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.AWS_ACCESS_KEYY!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEYY!,
   },
 });
 
@@ -49,7 +49,7 @@ export const uploadS3Image = async ({
       course.imageUrl?.split("/").pop() || generateRandomKey();
 
     const putObjectCommand = new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME!,
+      Bucket: process.env.AWS_BUCKET_NAMEE!,
       Key: generatedKey,
       Metadata: {
         courseId,
