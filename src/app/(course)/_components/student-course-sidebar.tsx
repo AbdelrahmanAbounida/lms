@@ -4,14 +4,6 @@ import { Chapter, Purchase, userProgress } from "@prisma/client";
 import React from "react";
 import StudentCourseSiedbarItem from "./student-course-sidebar-item";
 import { getUserProgress } from "@/actions/student/get-progress";
-import { Prisma } from "@prisma/client";
-import { prismadb } from "@/lib/db";
-
-type ChapterWithUserProgress = Prisma.ChapterGetPayload<{
-  include: {
-    userProgress: true;
-  };
-}>;
 
 export interface StudentCourseSidebarProps {
   title: string;

@@ -1,3 +1,4 @@
+"use client";
 import MuxViewer from "@/app/(dashboard)/_components/teacher/mux/MuxViewer";
 import { Download, Lock } from "lucide-react";
 import React from "react";
