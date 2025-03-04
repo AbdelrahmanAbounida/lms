@@ -2,7 +2,6 @@ import React from "react";
 import CourseCard from "./course-card";
 
 export const CourseList = ({ courses }: { courses: any[] }) => {
-  console.log({ courses });
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 p-6  gap-6">
       {courses.map((course, index) => (

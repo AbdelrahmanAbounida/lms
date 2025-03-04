@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import { MdEdit } from "react-icons/md";
 import { UploadImageForm } from "../s3/upload-image";
 import Image from "next/image";
 import { ImageIcon } from "@radix-ui/react-icons";

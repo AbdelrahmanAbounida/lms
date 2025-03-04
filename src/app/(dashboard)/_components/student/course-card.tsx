@@ -42,7 +42,7 @@ const CourseCard = ({
             src={imageUrl!}
             alt="course image"
             fill
-            className="rounded-md object-cover w-full"
+            className="rounded-md object-contain w-full h-full"
           />
         </CardContent>
         <CardFooter className="flex flex-col p-0 justify-start w-full  mt-3">

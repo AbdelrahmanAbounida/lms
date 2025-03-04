@@ -98,7 +98,7 @@ export const UploadImageForm = ({ courseId }: { courseId: any }) => {
   const [uploadImage, setuploadImage] = useState(false);
   const router = useRouter();
 
-  const files = acceptedFiles.map((file) => (
+  const files = acceptedFiles?.map((file) => (
     <li key={file.name}>
       {file.name} - {file.size} bytes
     </li>

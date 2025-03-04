@@ -41,7 +41,7 @@ const HomeStudent = () => {
       </div>
 
       {/** courses grid  */}
-      {allCourses.length ? (
+      {allCourses?.length ? (
         <CourseList courses={allCourses!} />
       ) : (
         <div className="w-full p-3 flex items-center justify-center">
